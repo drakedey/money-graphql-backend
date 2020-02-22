@@ -1,18 +1,22 @@
 /* eslint-disable no-console */
-import 'reflect-metadata';
+import { bootstrap } from 'vesper';
 
-import createConnection from '../db/connection';
+import UserController from './controller/UserController';
 
 import User from './entity/User';
 
-import express = require('express');
-
-
-const app: express.Application = express();
-
-app.get('/', (req, res) => {
-  res.send('Hello world!');
-});
-
-app.listen(3000, () => {
-});
+bootstrap({
+  port: 3000,
+  controllers: [UserController],
+  entities: [User],
+  schemas: [`${__dirname}/schema/**/*.graphql`],
+})
+  .then(() => {
+    console.log(
+      'Your app is up and running on http://localhost:3000. '
+        + 'You can use playground in development mode on http://localhost:3000/playground',
+    );
+  })
+  .catch((error) => {
+    console.error(error.stack ? error.stack : error);
+  });

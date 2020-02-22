@@ -1,11 +1,11 @@
 {
-  "type": "postgresql",
+  "type": "postgres",
   "host": "localhost",
   "port": 5435,
   "username": "tuten_user",
   "password": "holatuten123.",
   "database": "money_management",
-  "synchronize": true,
+  "synchronize": false,
   "logging": true,
   "entities": [
      "src/entity/**/*.ts"
