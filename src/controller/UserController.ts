@@ -16,7 +16,7 @@ class UserController {
   }
 
   @Query()
-  post({ id }: User): Promise<User | undefined> {
+  user({ id }: User): Promise<User | undefined> {
     return this.entityManager.findOne(User, id);
   }
 

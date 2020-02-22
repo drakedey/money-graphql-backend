@@ -16,22 +16,22 @@ class User {
     length: 44,
     name: 'name'
   })
-  name: string;
+  name!: string;
 
   @Column({
     length: 44,
     name: 'last_name',
   })
-  lastName: string;
+  lastName!: string;
 
   @Column('text')
-  email: string;
+  email!: string;
 
   @Column('text')
-  password: string;
+  password!: string;
 
   @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user)
-  accounts: MoneyAccountUser[];
+  accounts!: MoneyAccountUser[];
 }
 
 export default User;
