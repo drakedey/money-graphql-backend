@@ -40,3 +40,7 @@ CREATE TABLE transaction (
   CONSTRAINT money_account_user_fk FOREIGN KEY (money_account_user_id)
     REFERENCES money_account_user(id)
 );
+
+CREATE TYPE account_user_type AS ENUM('OWNER', 'VIEWER', 'CONTRIBUTOR');
+
+ALTER TABLE money_account_user ADD COLUMN user_rol account_user_type DEFAULT 'OWNER';

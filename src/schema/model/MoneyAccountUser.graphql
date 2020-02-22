@@ -1,0 +1,12 @@
+enum UserRol {
+  OWNER
+  VIEWER
+  CONTRIBUTOR
+}
+
+type MoneyAccountUser {
+  id: Int
+  user: User
+  account: Account
+  userRol: UserRol
+}

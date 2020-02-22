@@ -1,0 +1,12 @@
+enum Currency {
+  USD
+  COP
+  VEF
+}
+
+type Account {
+  id: Int
+  ammount: Int
+  currency: Currency
+  users: [MoneyAccountUser]
+}

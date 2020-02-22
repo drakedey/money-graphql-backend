@@ -4,10 +4,11 @@ import { bootstrap } from 'vesper';
 import UserController from './controller/UserController';
 
 import User from './entity/User';
+import AccountController from './controller/AccountController';
 
 bootstrap({
   port: 3000,
-  controllers: [UserController],
+  controllers: [UserController, AccountController],
   entities: [User],
   schemas: [`${__dirname}/schema/**/*.graphql`],
 })

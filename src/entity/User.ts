@@ -1,14 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn, OneToMany,
+} from 'typeorm';
+
+// eslint-disable-next-line import/no-cycle
+import { MoneyAccountUser } from './MoneyAccountUser';
 
 @Entity({
   name: 'money_user',
 })
 class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number | undefined;
 
   @Column({
     length: 44,
+    name: 'name'
   })
   name: string;
 
@@ -23,6 +29,9 @@ class User {
 
   @Column('text')
   password: string;
+
+  @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user)
+  accounts: MoneyAccountUser[];
 }
 
 export default User;

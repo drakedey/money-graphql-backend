@@ -6,14 +6,6 @@ import User from '../entity/User';
 
 @Controller()
 class UserController {
-  public getentityManager(): EntityManager {
-    return this.entityManager;
-  }
-
-  public setentityManager(value: EntityManager): void {
-    this.entityManager = value;
-  }
-
   constructor(
     private entityManager: EntityManager,
   ) { }

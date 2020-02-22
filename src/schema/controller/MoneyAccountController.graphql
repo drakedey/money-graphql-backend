@@ -1,0 +1,5 @@
+type Query {
+  accounts: [Account]
+  userAccounts(userId: Int): [Account]
+  account(id: Int): Account
+}
