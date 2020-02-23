@@ -14,7 +14,7 @@ class User {
 
   @Column({
     length: 44,
-    name: 'name'
+    name: 'name',
   })
   name!: string;
 
@@ -30,7 +30,7 @@ class User {
   @Column('text')
   password!: string;
 
-  @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user)
+  @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user, { eager: true })
   accounts!: MoneyAccountUser[];
 }
 

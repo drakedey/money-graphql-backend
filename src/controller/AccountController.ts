@@ -1,8 +1,10 @@
-import { Controller, Mutation } from 'vesper';
+/* eslint-disable no-plusplus */
+import { Controller, Mutation, Query } from 'vesper';
 import { EntityManager } from 'typeorm';
 import { MoneyAccount } from '../entity/MoneyAccount';
 import User from '../entity/User';
 import { MoneyAccountUser } from '../entity/MoneyAccountUser';
+import CreateAccountPayload from '../payload/CreateAccountPayload';
 
 @Controller()
 class AccountController {
@@ -11,7 +13,7 @@ class AccountController {
   ) { }
 
   @Mutation()
-  async createAccount(args: any): Promise<MoneyAccount> {
+  async createAccount(args: CreateAccountPayload): Promise<MoneyAccount> {
     const account = new MoneyAccount();
     account.ammount = args.ammount;
     account.currency = args.currency;
@@ -26,6 +28,11 @@ class AccountController {
       await this.entityManager.save(MoneyAccountUser, createdRelation);
     }
     return savedAccount;
+  }
+
+  @Query()
+  accounts(): Promise<MoneyAccount[]> {
+    return this.entityManager.find(MoneyAccount);
   }
 }
 

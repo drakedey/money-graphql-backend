@@ -11,7 +11,7 @@ class UserController {
   ) { }
 
   @Query()
-  users(): Promise<User[]> {
+  async users(): Promise<User[]> {
     return this.entityManager.find(User);
   }
 

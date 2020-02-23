@@ -5,7 +5,7 @@
   "username": "tuten_user",
   "password": "holatuten123.",
   "database": "money_management",
-  "synchronize": false,
+  "synchronize": true,
   "logging": true,
   "entities": [
      "src/entity/**/*.ts"

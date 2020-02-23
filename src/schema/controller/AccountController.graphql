@@ -1,5 +1,9 @@
-
-
 type Mutation {
   createAccount(ammount: Int, currency: Currency, userId: Int): Account
+}
+
+type Query {
+  accounts: [Account]
+  userAccounts(userId: Int): [Account]
+  account(id: Int): Account
 }

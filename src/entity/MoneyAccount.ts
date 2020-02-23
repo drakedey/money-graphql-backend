@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn, OneToMany,
+} from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import { MoneyAccountUser } from './MoneyAccountUser';
-import User from './User';
 
 enum CurrencyType {
   Usd = 'USD',
@@ -18,15 +20,19 @@ class MoneyAccount {
   @Column({
     name: 'amount',
   })
-  ammount: number;
+  ammount!: number;
 
   @Column({
     length: 3,
   })
   currency: CurrencyType = CurrencyType.Usd;
 
-  @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.account)
-  users: User[];
+  @OneToMany(
+    () => MoneyAccountUser,
+    (moneyAccountUser) => moneyAccountUser.account,
+    { eager: true },
+  )
+  users!: MoneyAccountUser[];
 }
 
 export { MoneyAccount, CurrencyType };
