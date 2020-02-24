@@ -32,6 +32,10 @@ class User {
 
   @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user, { eager: true })
   accounts!: MoneyAccountUser[];
+
+  checkPassword(password: string): boolean {
+    return password === this.password;
+  }
 }
 
 export default User;

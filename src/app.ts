@@ -6,10 +6,11 @@ import UserController from './controller/UserController';
 import User from './entity/User';
 import AccountController from './controller/AccountController';
 import { Transaction } from './entity/Transaction';
+import AuthController from './controller/AuthController';
 
 bootstrap({
   port: 3000,
-  controllers: [UserController, AccountController],
+  controllers: [UserController, AccountController, AuthController],
   entities: [User, Transaction],
   schemas: [`${__dirname}/schema/**/*.graphql`],
 })
