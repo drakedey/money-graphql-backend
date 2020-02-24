@@ -1,11 +1,14 @@
 import {
-  Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn,
+  Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany,
 } from 'typeorm';
 
 // eslint-disable-next-line import/no-cycle
 import User from './User';
 // eslint-disable-next-line import/no-cycle
 import { MoneyAccount } from './MoneyAccount';
+
+// eslint-disable-next-line import/no-cycle
+import { Transaction } from './Transaction';
 
 enum AccountUserType {
   Owner = 'OWNER',
@@ -32,6 +35,9 @@ class MoneyAccountUser {
   @ManyToOne(() => User, (user) => user.accounts)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.account)
+  transactions!: Transaction[];
 }
 
 export { MoneyAccountUser, AccountUserType };
