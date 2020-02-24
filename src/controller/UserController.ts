@@ -1,4 +1,6 @@
-import { Controller, Query, Mutation } from 'vesper';
+import {
+  Controller, Query, Mutation, Authorized,
+} from 'vesper';
 
 import { EntityManager } from 'typeorm';
 
@@ -10,6 +12,7 @@ class UserController {
     private entityManager: EntityManager,
   ) { }
 
+  @Authorized()
   @Query()
   async users(): Promise<User[]> {
     return this.entityManager.find(User);
