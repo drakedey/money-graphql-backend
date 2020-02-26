@@ -1,10 +1,11 @@
 import {
-  Controller, Query, Mutation, Authorized,
+  Controller, Query, Mutation, Authorized, ArgsValidator,
 } from 'vesper';
 
 import { EntityManager } from 'typeorm';
 
 import User from '../entity/User';
+import UserValidator from '../validators/UserValidator';
 
 @Controller()
 class UserController {
@@ -24,8 +25,10 @@ class UserController {
   }
 
   @Mutation()
+  @ArgsValidator(UserValidator)
   createUser(user: User): Promise<User> {
     const createdUser = this.entityManager.create(User, user);
+    createdUser.setEncriptedPassword();
     return this.entityManager.save(User, createdUser);
   }
 

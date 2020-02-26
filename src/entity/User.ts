@@ -1,6 +1,7 @@
 import {
   Entity, Column, PrimaryGeneratedColumn, OneToMany,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 // eslint-disable-next-line import/no-cycle
 import { MoneyAccountUser } from './MoneyAccountUser';
@@ -33,8 +34,14 @@ class User {
   @OneToMany(() => MoneyAccountUser, (moneyAccountUser) => moneyAccountUser.user, { eager: true })
   accounts!: MoneyAccountUser[];
 
-  checkPassword(password: string): boolean {
-    return password === this.password;
+  checkPassword(password: string): Promise<boolean> {
+    const validPassword = bcrypt.compare(password, this.password);
+    return validPassword;
+  }
+
+  setEncriptedPassword(): void {
+    const salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
   }
 }
 

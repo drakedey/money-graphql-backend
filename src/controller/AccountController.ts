@@ -1,5 +1,7 @@
 /* eslint-disable no-plusplus */
-import { Controller, Mutation, Query } from 'vesper';
+import {
+  Controller, Mutation, Query, Authorized,
+} from 'vesper';
 import { EntityManager } from 'typeorm';
 import { MoneyAccount } from '../entity/MoneyAccount';
 import User from '../entity/User';
@@ -12,6 +14,7 @@ class AccountController {
     private entityManager: EntityManager,
   ) { }
 
+  @Authorized()
   @Mutation()
   async createAccount(args: CreateAccountPayload): Promise<MoneyAccount> {
     const account = new MoneyAccount();

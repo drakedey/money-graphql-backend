@@ -13,7 +13,7 @@ class AuthController {
   @Mutation()
   async login(args: LoginPayload): Promise<string> {
     const user = await this.entityManager.findOneOrFail(User, { email: args.email });
-    if (!user.checkPassword(args.password)) throw new Error('{ error: "unhautorized" }');
+    if (!await user.checkPassword(args.password)) throw new Error('{ error: "unhautorized" }');
 
     const token = jwt.sign({ id: user.id }, 'SECRET', { expiresIn: '1h' });
     return token;
