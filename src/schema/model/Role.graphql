@@ -1,0 +1,6 @@
+type Role {
+  id: String
+  name: String
+  users: [User]
+  permissions: [Permission]
+}

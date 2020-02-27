@@ -1,0 +1,10 @@
+enum PermisionType {
+  EXECUTE
+  VIEW
+}
+
+type Permission {
+  id: String
+  type: PermisionType
+  description: String
+}

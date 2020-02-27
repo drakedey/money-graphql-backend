@@ -13,7 +13,7 @@ beforeAll(async () => {
 
 describe('AuthCotroller', () => {
   it('Should login a user and return token', async () => {
-    const loginData: LoginPayload = new LoginPayload();
+    const loginData = new LoginPayload();
     loginData.email = 'joskarandres97@gmail.com';
     loginData.password = '1234';
     const token = await authController.login(loginData);

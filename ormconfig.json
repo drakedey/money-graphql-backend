@@ -6,7 +6,7 @@
   "password": "holatuten123.",
   "database": "money_management",
   "synchronize": false,
-  "logging": true,
+  "logging": false,
   "entities": [
      "src/entity/**/*.ts"
   ],

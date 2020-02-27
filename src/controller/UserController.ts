@@ -5,7 +5,9 @@ import {
 import { EntityManager } from 'typeorm';
 
 import User from '../entity/User';
-import UserValidator from '../validators/UserValidator';
+import CreateUserValidator from '../validators/CreateUserValidator';
+import CreateUserPayload from '../payload/CreateUserPayload';
+import Role from '../entity/Role';
 
 @Controller()
 class UserController {
@@ -25,8 +27,10 @@ class UserController {
   }
 
   @Mutation()
-  @ArgsValidator(UserValidator)
-  createUser(user: User): Promise<User> {
+  @ArgsValidator(CreateUserValidator)
+  async createUser(createUserPayload: CreateUserPayload): Promise<User> {
+    const role = await this.entityManager.findOneOrFail(Role, { id: createUserPayload.rolId || 'USER' });
+    const user = new User(createUserPayload, role);
     const createdUser = this.entityManager.create(User, user);
     createdUser.setEncriptedPassword();
     return this.entityManager.save(User, createdUser);

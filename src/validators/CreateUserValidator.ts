@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import { Service } from 'typedi';
-import User from '../entity/User';
+import CreateUserPayload from '../payload/CreateUserPayload';
 
 @Service()
-class UserValidator {
-  validate(user: User): void {
+class CreateUserValidator {
+  validate(user: CreateUserPayload): void {
     if (user.name == null || !user.name.trim().length) throw new Error('name is required');
     if (user.email == null) throw new Error('mail is required');
     if (!user.email.match(new RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$'))) throw new Error('must input a valid email');
@@ -13,4 +13,4 @@ class UserValidator {
   }
 }
 
-export default UserValidator;
+export default CreateUserValidator;

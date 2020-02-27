@@ -13,4 +13,8 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  rules: {
+    "import/no-cycle": "off",
+    "no-plusplus": "off"
+  }
 };
