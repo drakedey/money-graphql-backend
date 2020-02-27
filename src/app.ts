@@ -1,14 +1,12 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 import { bootstrap } from 'vesper';
 
 import Entities from './entity';
-import Controllers from './controller';
 import { setupContainer, authorizationChecker } from './middleware';
 
 bootstrap({
   port: 3000,
-  controllers: [...Controllers],
+  controllers: [`${__dirname}/controller/*.ts`],
   entities: [...Entities],
   schemas: [`${__dirname}/schema/**/*.graphql`],
   setupContainer: async (container, action) => {
