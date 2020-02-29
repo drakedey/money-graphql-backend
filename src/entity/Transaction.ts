@@ -9,11 +9,9 @@ import {
 
 import { MoneyAccountUser } from './MoneyAccountUser';
 
-enum TransactionStatus {
-  Pending = 'PENDING',
-  InProcess = 'IN PROCESS',
-  Failed = 'FAILED',
-  Completed = 'COMPLETED'
+enum TransactionType {
+  Add = 'ADD',
+  Substract = 'SUBSTRACT'
 }
 
 @Entity({
@@ -27,7 +25,7 @@ class Transaction {
   ammount!: number;
 
   @Column()
-  status: TransactionStatus = TransactionStatus.Pending;
+  type: TransactionType = TransactionType.Add;
 
   @ManyToOne(
     () => MoneyAccountUser,
@@ -37,4 +35,4 @@ class Transaction {
   account!: MoneyAccountUser;
 }
 
-export { Transaction, TransactionStatus };
+export { Transaction, TransactionType };

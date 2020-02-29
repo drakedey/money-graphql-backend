@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Action } from 'vesper';
 import { getManager } from 'typeorm';
 import * as jwt from 'jsonwebtoken';

@@ -1,0 +1,11 @@
+enum TransactionType {
+  ADD
+  SUBSCTRACT
+}
+
+type Transaction {
+  id: ID
+  ammount: Int
+  type: TransactionType
+  account: MoneyAccountUser
+}

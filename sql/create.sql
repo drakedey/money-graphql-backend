@@ -29,12 +29,12 @@ CREATE TABLE money_account_user (
   CONSTRAINT user_account_unique UNIQUE (money_account_id, user_id)
 );
 
-CREATE TYPE transaction_status AS ENUM('PENDING', 'IN PROCESS', 'FAILED', 'COMPLETED');
+CREATE TYPE transaction_type AS ENUM('ADD', 'SUBSTRACT');
 
 CREATE TABLE transaction (
   id BIGSERIAL,
   ammount BIGINT NOT NULL,
-  status transaction_status DEFAULT 'PENDING',
+  type transaction_type DEFAULT 'ADD'
   money_account_user_id BIGINT NOT NULL,
   CONSTRAINT transaction_pk PRIMARY KEY (id),
   CONSTRAINT money_account_user_fk FOREIGN KEY (money_account_user_id)
@@ -69,5 +69,3 @@ CREATE TABLE permission_role (
     REFERENCES permission (id),
   CONSTRAINT permission_role_unique UNIQUE (role_id, permission_id)
 )
-
-ALTER TABLE money_user ADD COLUMN role_id VARCHAR;
