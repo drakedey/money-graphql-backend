@@ -34,7 +34,7 @@ class TransactionController {
     transaction = await this.entityManager.create(Transaction, transaction);
     transaction = await this.entityManager.save(transaction);
     const account = await moneyRelation.account;
-    const accountAmmount: number = typeof account.ammount === 'string' ? account.ammount * 1 : account.ammount;
+    const accountAmmount: number = typeof account.ammount === 'string' ? account.ammount * 1 : account.ammount ;
     const transactionAmmount: number = transaction.ammount;
     const operationResult: number = transaction.type === TransactionType.Add
       ? transactionAmmount + accountAmmount
