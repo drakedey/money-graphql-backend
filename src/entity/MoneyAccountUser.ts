@@ -28,11 +28,11 @@ class MoneyAccountUser {
   })
   userRol: AccountUserType = AccountUserType.Owner;
 
-  @ManyToOne(() => MoneyAccount, (moneyAccount) => moneyAccount.users)
+  @ManyToOne(() => MoneyAccount, (moneyAccount) => moneyAccount.users, { lazy: true })
   @JoinColumn({ name: 'money_account_id', referencedColumnName: 'id' })
   account!: MoneyAccount;
 
-  @ManyToOne(() => User, (user) => user.accounts)
+  @ManyToOne(() => User, (user) => user.accounts, { lazy: true })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 

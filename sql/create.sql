@@ -36,6 +36,7 @@ CREATE TABLE transaction (
   ammount BIGINT NOT NULL,
   type transaction_type DEFAULT 'ADD'
   money_account_user_id BIGINT NOT NULL,
+  created_date DATE DEFAULT NOW(),
   CONSTRAINT transaction_pk PRIMARY KEY (id),
   CONSTRAINT money_account_user_fk FOREIGN KEY (money_account_user_id)
     REFERENCES money_account_user(id)

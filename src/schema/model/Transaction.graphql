@@ -1,6 +1,6 @@
 enum TransactionType {
   ADD
-  SUBSCTRACT
+  SUBSTRACT
 }
 
 type Transaction {
@@ -8,4 +8,5 @@ type Transaction {
   ammount: Int
   type: TransactionType
   account: MoneyAccountUser
+  createdDate: Date
 }

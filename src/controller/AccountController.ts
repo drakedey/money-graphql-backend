@@ -2,7 +2,7 @@
 import {
   Controller, Mutation, Query, Authorized,
 } from 'vesper';
-import { EntityManager } from 'typeorm';
+import { EntityManager, createQueryBuilder } from 'typeorm';
 import { MoneyAccount } from '../entity/MoneyAccount';
 import User from '../entity/User';
 import { MoneyAccountUser } from '../entity/MoneyAccountUser';
@@ -12,6 +12,7 @@ import CreateAccountPayload from '../payload/CreateAccountPayload';
 class AccountController {
   constructor(
     private entityManager: EntityManager,
+    private currentUser: User,
   ) { }
 
   @Authorized()
@@ -22,20 +23,29 @@ class AccountController {
     account.currency = args.currency;
     const createdAccount = this.entityManager.create(MoneyAccount, account);
     const savedAccount = await this.entityManager.save(MoneyAccount, createdAccount);
-    const user = await this.entityManager.findOne(User, { id: args.userId });
-    if (user) {
-      const accountRelation = new MoneyAccountUser();
-      accountRelation.account = savedAccount;
-      accountRelation.user = user;
-      const createdRelation = this.entityManager.create(MoneyAccountUser, accountRelation);
-      await this.entityManager.save(MoneyAccountUser, createdRelation);
-    }
-    return savedAccount;
+    const accountRelation = new MoneyAccountUser();
+    accountRelation.account = savedAccount;
+    accountRelation.user = this.currentUser;
+    const createdRelation = this.entityManager.create(MoneyAccountUser, accountRelation);
+    await this.entityManager.save(MoneyAccountUser, createdRelation);
+    return this.entityManager.findOneOrFail(MoneyAccount, { id: savedAccount.id });
   }
 
   @Query()
   accounts(): Promise<MoneyAccount[]> {
     return this.entityManager.find(MoneyAccount);
+  }
+
+  @Authorized()
+  @Query({ name: 'userAccounts' })
+  // eslint-disable-next-line class-methods-use-this
+  async userAccounts(): Promise<MoneyAccount[]> {
+    const result = await createQueryBuilder(MoneyAccount)
+      .leftJoinAndSelect('MoneyAccount.users', 'userAccount')
+      .leftJoin('userAccount.user', 'user')
+      .where('user.id = :userId', { userId: this.currentUser?.id })
+      .getMany();
+    return result;
   }
 }
 

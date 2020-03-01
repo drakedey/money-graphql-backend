@@ -27,9 +27,13 @@ class Transaction {
   @Column()
   type: TransactionType = TransactionType.Add;
 
+  @Column({ name: 'created_date' })
+  createdDate: Date = new Date();
+
   @ManyToOne(
     () => MoneyAccountUser,
     (moneyAccountUser) => moneyAccountUser.transactions,
+    { eager: true },
   )
   @JoinColumn({ name: 'money_account_user_id', referencedColumnName: 'id' })
   account!: MoneyAccountUser;

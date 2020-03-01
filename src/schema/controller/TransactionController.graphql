@@ -1,13 +1,8 @@
-input CreateTransactionInput {
-  ammoun: Int
-  transactionType: TransactionType
-}
-
 type Query {
   transactionsByAccount(accountId: Int): [Transaction]
   transactionsByUser: [Transaction]
 }
 
 type Mutation {
-  createTransaction(data: CreateTransactionInput): Transaction
+  createTransaction(ammount: Int, type: TransactionType, accountId: Int): Transaction
 }
