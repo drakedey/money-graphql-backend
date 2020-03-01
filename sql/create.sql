@@ -34,7 +34,7 @@ CREATE TYPE transaction_type AS ENUM('ADD', 'SUBSTRACT');
 CREATE TABLE transaction (
   id BIGSERIAL,
   ammount BIGINT NOT NULL,
-  type transaction_type DEFAULT 'ADD'
+  type transaction_type DEFAULT 'ADD',
   money_account_user_id BIGINT NOT NULL,
   created_date DATE DEFAULT NOW(),
   CONSTRAINT transaction_pk PRIMARY KEY (id),
@@ -48,9 +48,9 @@ ALTER TABLE money_account_user ADD COLUMN user_rol account_user_type DEFAULT 'OW
 
 CREATE TABLE role (
   id VARCHAR NOT NULL,
-  name VRCHAR(40) NOT NULL,
+  name VARCHAR(40) NOT NULL,
   CONSTRAINT role_pk PRIMARY KEY (id)
-)
+);
 
 CREATE TYPE permission_type AS ENUM ('VIEW', 'EXECUTE');
 
