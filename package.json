@@ -6,8 +6,9 @@
   "scripts": {
     "test": "jest --watch",
     "tsc": "tsc",
-    "start": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
-    "prod": "tsc && node ./build/src/app.js"
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
+    "prod": "tsc && node ./build/src/app.js",
+    "start": "ts-node src/app.ts"
   },
   "keywords": [],
   "author": "",
