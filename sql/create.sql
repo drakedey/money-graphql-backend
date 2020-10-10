@@ -1,11 +1,40 @@
+CREATE TABLE role (
+  id VARCHAR NOT NULL,
+  name VARCHAR(40) NOT NULL,
+  CONSTRAINT role_pk PRIMARY KEY (id)
+);
+
+CREATE TYPE permission_type AS ENUM ('VIEW', 'EXECUTE');
+
+CREATE TABLE permission (
+  id VARCHAR NOT NULL,
+  type permission_type DEFAULT 'VIEW',
+  description VARCHAR(200),
+  CONSTRAINT permission_pk PRIMARY KEY(id)
+);
+
+CREATE TABLE permission_role (
+  role_id VARCHAR NOT NULL,
+  permission_id VARCHAR NOT NULL,
+  CONSTRAINT role_fk FOREIGN KEY (role_id)
+    REFERENCES role (id),
+  CONSTRAINT permission_fk FOREIGN KEY (permission_id)
+    REFERENCES permission (id),
+  CONSTRAINT permission_role_unique UNIQUE (role_id, permission_id)
+);
+
 CREATE TABLE money_user (
   id BIGSERIAL,
   name VARCHAR(44) NOT NULL,
   last_name VARCHAR(44) NOT NULL,
   email TEXT NOT NULL,
   password TEXT NOT NULL,
+  role_id VARCHAR NOT NULL,
   CONSTRAINT user_pk PRIMARY KEY (id),
-  CONSTRAINT email_user_unique UNIQUE (email)
+  CONSTRAINT email_user_unique UNIQUE (email),
+  CONSTRAINT role_fk FOREIGN KEY (role_id) 
+  REFERENCES role (id) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
 CREATE TYPE currency_type AS ENUM('USD', 'COP', 'VEF');
@@ -45,28 +74,3 @@ CREATE TABLE transaction (
 CREATE TYPE account_user_type AS ENUM('OWNER', 'VIEWER', 'CONTRIBUTOR');
 
 ALTER TABLE money_account_user ADD COLUMN user_rol account_user_type DEFAULT 'OWNER';
-
-CREATE TABLE role (
-  id VARCHAR NOT NULL,
-  name VARCHAR(40) NOT NULL,
-  CONSTRAINT role_pk PRIMARY KEY (id)
-);
-
-CREATE TYPE permission_type AS ENUM ('VIEW', 'EXECUTE');
-
-CREATE TABLE permission (
-  id VARCHAR NOT NULL,
-  type permission_type DEFAULT 'VIEW',
-  description VARCHAR(200),
-  CONSTRAINT permission_pk PRIMARY KEY(id)
-);
-
-CREATE TABLE permission_role (
-  role_id VARCHAR NOT NULL,
-  permission_id VARCHAR NOT NULL,
-  CONSTRAINT role_fk FOREIGN KEY (role_id)
-    REFERENCES role (id),
-  CONSTRAINT permission_fk FOREIGN KEY (permission_id)
-    REFERENCES permission (id),
-  CONSTRAINT permission_role_unique UNIQUE (role_id, permission_id)
-)
