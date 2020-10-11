@@ -5,10 +5,11 @@ import Entities from './entity';
 import { setupContainer, authorizationChecker } from './middleware';
 
 bootstrap({
-  port: 3000,
+  port: 4000,
   controllers: [`${__dirname}/controller/*.ts`],
   entities: [...Entities],
   schemas: [`${__dirname}/schema/**/*.graphql`],
+  cors: true,
   setupContainer: async (container, action) => {
     await setupContainer(container, action);
   },
@@ -18,8 +19,8 @@ bootstrap({
 })
   .then(() => {
     console.log(
-      'Your app is up and running on http://localhost:3000. '
-        + 'You can use playground in development mode on http://localhost:3000/playground',
+      'Your app is up and running on http://localhost:4000. '
+        + 'You can use playground in development mode on http://localhost:4000/playground',
     );
   })
   .catch((error) => {
