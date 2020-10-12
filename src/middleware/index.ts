@@ -4,10 +4,7 @@ import { getManager } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
 import User from '../entity/User';
 
-async function setupContainer(
-  container: any,
-  action: Action,
-): Promise<void> {
+async function setupContainer(container: any, action: Action): Promise<void> {
   const { request } = action;
   const token: string = (request?.headers['token'] as string) || '';
 
@@ -38,7 +35,7 @@ async function authorizationChecker(
   for (let i = 0; i < requiredPermissions.length; i++) {
     const requiredPermission = requiredPermissions[i];
     hasPermission = Boolean(
-      permissions.find((permission) => permission.id === requiredPermission),
+      permissions.find((permission) => permission.id === requiredPermission)
     );
     if (hasPermission) break;
   }

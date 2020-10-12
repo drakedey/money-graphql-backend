@@ -12,8 +12,8 @@ import CreateAccountPayload from '../payload/CreateAccountPayload';
 class AccountController {
   constructor(
     private entityManager: EntityManager,
-    private currentUser: User,
-  ) { }
+    private currentUser: User
+  ) {}
 
   @Authorized()
   @Mutation()
@@ -22,13 +22,21 @@ class AccountController {
     account.ammount = args.ammount;
     account.currency = args.currency;
     const createdAccount = this.entityManager.create(MoneyAccount, account);
-    const savedAccount = await this.entityManager.save(MoneyAccount, createdAccount);
+    const savedAccount = await this.entityManager.save(
+      MoneyAccount,
+      createdAccount
+    );
     const accountRelation = new MoneyAccountUser();
     accountRelation.account = savedAccount;
     accountRelation.user = this.currentUser;
-    const createdRelation = this.entityManager.create(MoneyAccountUser, accountRelation);
+    const createdRelation = this.entityManager.create(
+      MoneyAccountUser,
+      accountRelation
+    );
     await this.entityManager.save(MoneyAccountUser, createdRelation);
-    return this.entityManager.findOneOrFail(MoneyAccount, { id: savedAccount.id });
+    return this.entityManager.findOneOrFail(MoneyAccount, {
+      id: savedAccount.id,
+    });
   }
 
   @Query()
@@ -46,6 +54,11 @@ class AccountController {
       .where('user.id = :userId', { userId: this.currentUser?.id })
       .getMany();
     return result;
+  }
+
+  @Query({ name: 'getCurrentUser' })
+  async getCurrentUser(): Promise<User> {
+    return this.currentUser;
   }
 }
 
